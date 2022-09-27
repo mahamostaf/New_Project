@@ -1,14 +1,46 @@
-// var url = require("url");
-
-// var address = "https://githup.com.com/mahamostaf";
-// var endPoint=url.parse(address,true);
-// console.log(endPoint.host);
-
 const { write } = require("fs");
 const http = require("http");
-let port = 8000 ;
-http.createServer(function(req,res){
-    let url = (req.url).split('/');
-    res.write(url[1]);
-    res.end();
-}).listen(port);
+const express = require("express");
+const app = express();
+
+var books = [
+    {id:1,name:"El-Ayam",description:"The Life Of Author",publishedAt:"1970",author:"Taha Hussien"},
+];
+
+
+app.get('/books',(req,res)=>{
+    res.json({
+        data:books ,
+    });
+});
+
+app.post('/books',(req,res)=>{  
+    let name, description, publishedAt, author = req.body ;
+    let book = {
+        id:books.length +1 ,
+        name,
+        description,
+        publishedAt,
+        author
+    }
+    books.push(book) 
+    res.json({
+        data:book ,
+    });
+});
+
+app.patch('books/id',(req,res)=>{
+    let name, description, publishedAt, author = req.body ;
+    let id = req.params ;
+    let book = {
+        id:books.length +1 ,
+        name,
+        description,
+        publishedAt,
+        author
+    }
+})
+
+
+app.listen(8000);
+
